@@ -90,6 +90,9 @@ VL_ATTR_COLD void VLed___024root___stl_sequent__TOP__0(VLed___024root* vlSelf) {
     VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___stl_sequent__TOP__0\n"); );
     // Body
+    VL_WRITEF("r_Switch: %b, i_Switch: %b, i_CLK: %b\n",
+              1,vlSelf->Led__DOT__r_Switch,1,(IData)(vlSelf->i_Switch),
+              1,vlSelf->i_Clk);
     vlSelf->o_led1 = vlSelf->Led__DOT__r_led1;
 }
 
@@ -121,6 +124,21 @@ VL_ATTR_COLD bool VLed___024root___eval_phase__stl(VLed___024root* vlSelf) {
 }
 
 #ifdef VL_DEBUG
+VL_ATTR_COLD void VLed___024root___dump_triggers__ico(VLed___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___dump_triggers__ico\n"); );
+    // Body
+    if ((1U & (~ (IData)(vlSelf->__VicoTriggered.any())))) {
+        VL_DBG_MSGF("         No triggers active\n");
+    }
+    if ((1ULL & vlSelf->__VicoTriggered.word(0U))) {
+        VL_DBG_MSGF("         'ico' region trigger index 0 is active: Internal 'ico' trigger - first iteration\n");
+    }
+}
+#endif  // VL_DEBUG
+
+#ifdef VL_DEBUG
 VL_ATTR_COLD void VLed___024root___dump_triggers__act(VLed___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -130,7 +148,7 @@ VL_ATTR_COLD void VLed___024root___dump_triggers__act(VLed___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge i_Clk)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(negedge i_Clk)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -145,7 +163,7 @@ VL_ATTR_COLD void VLed___024root___dump_triggers__nba(VLed___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge i_Clk)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(negedge i_Clk)\n");
     }
 }
 #endif  // VL_DEBUG

@@ -5,6 +5,43 @@
 #include "VLed__pch.h"
 #include "VLed___024root.h"
 
+VL_INLINE_OPT void VLed___024root___ico_sequent__TOP__0(VLed___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___ico_sequent__TOP__0\n"); );
+    // Body
+    VL_WRITEF("r_Switch: %b, i_Switch: %b, i_CLK: %b\n",
+              1,vlSelf->Led__DOT__r_Switch,1,(IData)(vlSelf->i_Switch),
+              1,vlSelf->i_Clk);
+}
+
+void VLed___024root___eval_ico(VLed___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___eval_ico\n"); );
+    // Body
+    if ((1ULL & vlSelf->__VicoTriggered.word(0U))) {
+        VLed___024root___ico_sequent__TOP__0(vlSelf);
+    }
+}
+
+void VLed___024root___eval_triggers__ico(VLed___024root* vlSelf);
+
+bool VLed___024root___eval_phase__ico(VLed___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___eval_phase__ico\n"); );
+    // Init
+    CData/*0:0*/ __VicoExecute;
+    // Body
+    VLed___024root___eval_triggers__ico(vlSelf);
+    __VicoExecute = vlSelf->__VicoTriggered.any();
+    if (__VicoExecute) {
+        VLed___024root___eval_ico(vlSelf);
+    }
+    return (__VicoExecute);
+}
+
 void VLed___024root___eval_act(VLed___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
@@ -16,14 +53,14 @@ VL_INLINE_OPT void VLed___024root___nba_sequent__TOP__0(VLed___024root* vlSelf) 
     VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___nba_sequent__TOP__0\n"); );
     // Body
-    VL_WRITEF("r_Switch: %b, i_Switch: %b, i_CLK: %b\n",
-              1,vlSelf->Led__DOT__r_Switch,1,(IData)(vlSelf->i_Switch),
-              1,vlSelf->i_Clk);
     if (((~ (IData)(vlSelf->i_Switch)) & (IData)(vlSelf->Led__DOT__r_Switch))) {
         vlSelf->Led__DOT__r_led1 = (1U & (~ (IData)(vlSelf->Led__DOT__r_led1)));
     }
     vlSelf->o_led1 = vlSelf->Led__DOT__r_led1;
     vlSelf->Led__DOT__r_Switch = vlSelf->i_Switch;
+    VL_WRITEF("r_Switch: %b, i_Switch: %b, i_CLK: %b\n",
+              1,vlSelf->Led__DOT__r_Switch,1,(IData)(vlSelf->i_Switch),
+              1,vlSelf->i_Clk);
 }
 
 void VLed___024root___eval_nba(VLed___024root* vlSelf) {
@@ -72,6 +109,9 @@ bool VLed___024root___eval_phase__nba(VLed___024root* vlSelf) {
 }
 
 #ifdef VL_DEBUG
+VL_ATTR_COLD void VLed___024root___dump_triggers__ico(VLed___024root* vlSelf);
+#endif  // VL_DEBUG
+#ifdef VL_DEBUG
 VL_ATTR_COLD void VLed___024root___dump_triggers__nba(VLed___024root* vlSelf);
 #endif  // VL_DEBUG
 #ifdef VL_DEBUG
@@ -83,9 +123,28 @@ void VLed___024root___eval(VLed___024root* vlSelf) {
     VLed__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VLed___024root___eval\n"); );
     // Init
+    IData/*31:0*/ __VicoIterCount;
+    CData/*0:0*/ __VicoContinue;
     IData/*31:0*/ __VnbaIterCount;
     CData/*0:0*/ __VnbaContinue;
     // Body
+    __VicoIterCount = 0U;
+    vlSelf->__VicoFirstIteration = 1U;
+    __VicoContinue = 1U;
+    while (__VicoContinue) {
+        if (VL_UNLIKELY((0x64U < __VicoIterCount))) {
+#ifdef VL_DEBUG
+            VLed___024root___dump_triggers__ico(vlSelf);
+#endif
+            VL_FATAL_MT("Led.v", 1, "", "Input combinational region did not converge.");
+        }
+        __VicoIterCount = ((IData)(1U) + __VicoIterCount);
+        __VicoContinue = 0U;
+        if (VLed___024root___eval_phase__ico(vlSelf)) {
+            __VicoContinue = 1U;
+        }
+        vlSelf->__VicoFirstIteration = 0U;
+    }
     __VnbaIterCount = 0U;
     __VnbaContinue = 1U;
     while (__VnbaContinue) {
