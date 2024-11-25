@@ -15,9 +15,6 @@ void Vuart___024root___eval_triggers__act(Vuart___024root* vlSelf) {
     Vuart__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vuart___024root___eval_triggers__act\n"); );
     // Body
-    vlSelf->__VactTriggered.set(0U, ((IData)(vlSelf->i_Clk) 
-                                     & (~ (IData)(vlSelf->__Vtrigprevexpr___TOP__i_Clk__0))));
-    vlSelf->__Vtrigprevexpr___TOP__i_Clk__0 = vlSelf->i_Clk;
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vuart___024root___dump_triggers__act(vlSelf);

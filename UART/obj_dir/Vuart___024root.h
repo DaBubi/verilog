@@ -15,11 +15,10 @@ class alignas(VL_CACHE_LINE_BYTES) Vuart___024root final : public VerilatedModul
 
     // DESIGN SPECIFIC STATE
     VL_IN8(i_Clk,0,0);
-    CData/*0:0*/ __Vtrigprevexpr___TOP__i_Clk__0;
     CData/*0:0*/ __VactContinue;
     IData/*31:0*/ __VactIterCount;
-    VlTriggerVec<1> __VactTriggered;
-    VlTriggerVec<1> __VnbaTriggered;
+    VlTriggerVec<0> __VactTriggered;
+    VlTriggerVec<0> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vuart__Syms* const vlSymsp;

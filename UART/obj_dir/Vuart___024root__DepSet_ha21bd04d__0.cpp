@@ -11,22 +11,10 @@ void Vuart___024root___eval_act(Vuart___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vuart___024root___eval_act\n"); );
 }
 
-VL_INLINE_OPT void Vuart___024root___nba_sequent__TOP__0(Vuart___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vuart__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vuart___024root___nba_sequent__TOP__0\n"); );
-    // Body
-    VL_WRITEF("Clock cycle: %b\n",1,vlSelf->i_Clk);
-}
-
 void Vuart___024root___eval_nba(Vuart___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vuart__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vuart___024root___eval_nba\n"); );
-    // Body
-    if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
-        Vuart___024root___nba_sequent__TOP__0(vlSelf);
-    }
 }
 
 void Vuart___024root___eval_triggers__act(Vuart___024root* vlSelf);
@@ -36,7 +24,7 @@ bool Vuart___024root___eval_phase__act(Vuart___024root* vlSelf) {
     Vuart__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vuart___024root___eval_phase__act\n"); );
     // Init
-    VlTriggerVec<1> __VpreTriggered;
+    VlTriggerVec<0> __VpreTriggered;
     CData/*0:0*/ __VactExecute;
     // Body
     Vuart___024root___eval_triggers__act(vlSelf);
@@ -86,7 +74,7 @@ void Vuart___024root___eval(Vuart___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vuart___024root___dump_triggers__nba(vlSelf);
 #endif
-            VL_FATAL_MT("uart.v", 1, "", "NBA region did not converge.");
+            VL_FATAL_MT("uart.v", 2, "", "NBA region did not converge.");
         }
         __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
         __VnbaContinue = 0U;
@@ -97,7 +85,7 @@ void Vuart___024root___eval(Vuart___024root* vlSelf) {
 #ifdef VL_DEBUG
                 Vuart___024root___dump_triggers__act(vlSelf);
 #endif
-                VL_FATAL_MT("uart.v", 1, "", "Active region did not converge.");
+                VL_FATAL_MT("uart.v", 2, "", "Active region did not converge.");
             }
             vlSelf->__VactIterCount = ((IData)(1U) 
                                        + vlSelf->__VactIterCount);
