@@ -6,7 +6,11 @@ vluint64_t main_time = 0;       // Symulowany czas
 double sc_time_stamp () {       // Funkcja wymagana przez Verilator
     return main_time; 
 }
-
+void print_binary(unsigned int value, int bit_count){
+    for (int i = bit_count -1; i>=0; i--){
+        printf("%d", (value >> i) & 1);
+    }
+}
 int main(int argc, char** argv, char** env) {
     Verilated::commandArgs(argc, argv);
     Vrx* top = new Vrx; // Tworzenie instancji modułu top
