@@ -7,16 +7,21 @@ module baud_rate_gen #(
     output reg rx_Clk,
     output reg tx_Clk
 );
+
     // Calculating what maximum baud rate we need for RX clock and TX clock, RX
     // with oversampling. Its in decimal, like baud_rate above
     parameter MAX_RX = Clock_rate / (2 * Baud_rate * 16);
     parameter MAX_TX = Clock_rate / (2 * Baud_rate);
 
+
     // Calculating the width of register for a counter
-    // That will count INPUT CLOCK cycles to generate
+    // That will count INPUT CLOCK cycles to generate 
     // ONE RX CLOCK cycle and ONE TX CLOCK cycle
     parameter RX_CNT_WIDTH = $clog2(MAX_RX);
     parameter TX_CNT_WIDTH = $clog2(MAX_TX);
+
+    //assign MAX_RX_OUT = MAX_RX;
+    //assign MAX_TX_OUT = MAX_TX;
 
     reg [RX_CNT_WIDTH - 1:0] rxCounter = 0; 
     reg [TX_CNT_WIDTH - 1:0] txCounter = 0;

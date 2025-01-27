@@ -6,12 +6,15 @@ module rx(
 
     output reg      o_RX_valid, // Vaild data received
     output reg      o_RX_active, // RX is working
+ 
     output reg  [9:0]o_RX_byte, // Received data
-    output reg  [2:0]error, // Error reading the data
-  	output reg	[3:0]bit_counter,
-  	output reg  [3:0]oversample_counter,
-  	output reg  [9:0]o_RX_buffer,
-	output reg	[2:0]state
+    output reg  [2:0]error // Error reading the data
+
+    // For the use of verilator debugging:  
+  	// output reg	[3:0]bit_counter,
+  	// output reg  [3:0]oversample_counter,
+  	// output reg  [9:0]o_RX_buffer,
+	// output reg	[2:0]state
 );
 
 // states of state machine
@@ -22,15 +25,15 @@ reg [2:0] DATA_BITS = 3'b011;
 reg [2:0] STOP_BIT = 3'b100;
 
 reg [1:0] input_negedge = 2'b0; // To detect start_bit
-//reg [3:0] bit_counter = 4'b0; 
-// Data bits counter reg Bits ID
-//reg [3:0] oversample_counter = 4'b0; // oversampling counter 16x
-//reg [9:0] o_RX_buffer = 10'b0; // Data bits storage
-//reg [2:0] state;
+reg [3:0] bit_counter = 4'b0; 
+//Data bits counter reg Bits ID
+reg [3:0] oversample_counter = 4'b0; // oversampling counter 16x
+reg [9:0] o_RX_buffer = 10'b0; // Data bits storage
+reg [2:0] state;
 
 
 initial begin
-  	state = RESET;
+  	state = IDLE;
     o_RX_byte = 10'b0;
     o_RX_valid = 1'b0;
     o_RX_active = 1'b0;
@@ -61,6 +64,8 @@ begin
             bit_counter <= 4'b0000;
             oversample_counter <= 4'b0000;
 
+
+            // invalid logic:
             if (enable) begin
                 state <= IDLE;
             end
