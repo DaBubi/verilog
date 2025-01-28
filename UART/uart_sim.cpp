@@ -19,37 +19,33 @@ char getch() {
 }
 
 int main(int argc, char** argv) {
-    // Inicjalizacja Verilatora
+    // Verilator initialization
     Verilated::commandArgs(argc, argv);
 
-    // Tworzenie instancji modułu UART
+    // UART instance created
     Vuart* top = new Vuart;
 
-    // Symulacja w ciągłej pracy
-    std::cout << "Symulacja UART. Wprowadź znaki (q aby zakończyć):" << std::endl;
+    // Simulation of UART module continuously:
+    std::cout << "UART Simulation. Enter ASCI symbol: (q to end simulation):" << std::endl;
     while (true) {
-        // Odczytaj znak z klawiatury
         char input_char = getch();
-        if (input_char == 'q') break; // Zakończ symulację po wpisaniu 'q'
+        if (input_char == 'q') break;
 
-        // Symulacja wysłania znaku przez UART (bit po bicie)
-        top->i_RX_serial = 0; // Start bit
+        top->i_RX_serial = 0; 
         top->eval();
         for (int i = 0; i < 8; ++i) {
-            top->i_RX_serial = (input_char >> i) & 1; // Bity danych
+            top->i_RX_serial = (input_char >> i) & 1; 
             top->eval();
         }
-        top->i_RX_serial = 1; // Stop bit
+        top->i_RX_serial = 1;
         top->eval();
 
-        // Oczekiwanie na odpowiedź UART
         while (!top->o_TX_done) {
             top->i_Clk = !top->i_Clk;
             top->eval();
         }
 
-        // Wyświetlenie odebranego znaku
-        std::cout << "Odebrano i wysłano: " << input_char << std::endl;
+        std::cout << "Receved: " << input_char << std::endl;
     }
 
     // Zakończenie symulacji

@@ -44,7 +44,6 @@ end
 // if posedge rx_Clk when saving to error reg will take place would overlap
 // with top-module Clk??
 
-
 always @(posedge rx_Clk)
 begin
     input_negedge <= {input_negedge[0], i_RX_serial};

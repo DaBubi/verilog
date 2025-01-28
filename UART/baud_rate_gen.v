@@ -23,7 +23,7 @@ module baud_rate_gen #(
     //assign MAX_RX_OUT = MAX_RX;
     //assign MAX_TX_OUT = MAX_TX;
 
-    reg [RX_CNT_WIDTH - 1:0] rxCounter = 0; 
+    reg [RX_CNT_WIDTH - 1:0] rxCounter = 0;  
     reg [TX_CNT_WIDTH - 1:0] txCounter = 0;
 
     initial begin
