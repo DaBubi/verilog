@@ -5,7 +5,7 @@ module rx(
     input wire      enable, // Start receiving signal
 
     output reg      o_RX_valid, // Vaild data received
-    output reg      o_RX_active, // RX is working
+    //output reg      o_RX_active, // RX is working
  
     output reg  [9:0]o_RX_byte, // Received data
     output reg  [2:0]error // Error reading the data
@@ -36,7 +36,7 @@ initial begin
   	state = IDLE;
     o_RX_byte = 10'b0;
     o_RX_valid = 1'b0;
-    o_RX_active = 1'b0;
+    //o_RX_active = 1'b0;
     error = 3'b000; // Error messages storage??
 end
 
@@ -58,7 +58,7 @@ begin
             o_RX_buffer <= 10'b0;
             o_RX_valid <= 1'b0;
 
-            o_RX_active <= 1'b0;
+            //o_RX_active <= 1'b0;
             error <= 3'b000;
             bit_counter <= 4'b0000;
             oversample_counter <= 4'b0000;
@@ -78,7 +78,7 @@ begin
                 // Changing state to data_bits 
                 state <= START_BIT;
                 // RX is now active and collecting data
-                o_RX_active <= 1'b1;
+                //o_RX_active <= 1'b1;
               	oversample_counter <= 4'b0;
 
             end

@@ -5,7 +5,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-// Funkcja do odczytu pojedynczego znaku z klawiatury (bez Entera)
+// Char reading from terminal
 char getch() {
     struct termios oldt, newt;
     char ch;
@@ -31,16 +31,16 @@ int main(int argc, char** argv) {
         char input_char = getch();
         if (input_char == 'q') break;
 
-        top->i_RX_serial = 0; 
+        top->Input_bit = 0; 
         top->eval();
         for (int i = 0; i < 8; ++i) {
-            top->i_RX_serial = (input_char >> i) & 1; 
+            top->Input_bit = (input_char >> i) & 1; 
             top->eval();
         }
-        top->i_RX_serial = 1;
+        top->Input_bit = 1;
         top->eval();
 
-        while (!top->o_TX_done) {
+        while (!top->tx_done) {
             top->i_Clk = !top->i_Clk;
             top->eval();
         }
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
         std::cout << "Receved: " << input_char << std::endl;
     }
 
-    // Zakończenie symulacji
+    // Delete Verilator instance after simulation
     delete top;
     return 0;
 }

@@ -1,9 +1,10 @@
 module uart (
     input wire i_Clk,
-    input reg Input_Bit,
+    input reg Input_bit,
 
-    output reg [9:0] Output_Byte,
-    output reg [2:0] rx_error
+    output reg output_bit,
+    output reg [2:0] rx_error,
+    output reg tx_done
 );
 
     // Warnings turn off:
@@ -16,10 +17,10 @@ module uart (
 
     // RX wires
     wire o_RX_valid;
-    wire o_RX_active;
+   // wire o_RX_active;
 
     // TX wires
-    wire o_TX_active;
+    //wire o_TX_active;
     wire en_tx;
 
     // Start of TX
@@ -27,11 +28,8 @@ module uart (
     // RX module listening
     reg en_rec = 1'b0;
     // Data from RX submodule to TX submodule
-    wire data_read;
+    wire reg [9:0] data_read;
 
-    //Value readed by TX submodule
-    //reg[9:0] rx_value;
-    
     baud_rate_gen #(
         .Clock_rate(100000000),
         .Baud_rate(9600)
@@ -43,11 +41,11 @@ module uart (
 
     rx rxc (
         .rx_Clk(rxClk),
-        .i_RX_serial(Input_Bit),
+        .i_RX_serial(Input_bit),
         .enable(en_rec),
 
         .o_RX_valid(o_RX_valid),
-        .o_RX_active(o_RX_active),
+        //.o_RX_active(o_RX_active),
         .o_RX_byte(data_read),
         .error(rx_error)
     );
@@ -59,8 +57,9 @@ module uart (
         .i_tx_byte(data_read),
         .tx_enable(en_tx),
 
-        .out_tx_byte(Output_Byte),
-        .o_TX_active(o_TX_active)
+        .out_bit(output_bit),
+        .tx_done(tx_done)
+        //.o_TX_active(o_TX_active)
 
     );
 
